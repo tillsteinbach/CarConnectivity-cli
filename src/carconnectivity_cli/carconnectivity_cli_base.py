@@ -179,7 +179,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                 sys.exit(-1)
 
         car_connectivity.shutdown()
-    except errors.AuthentificationError as e:
+    except errors.AuthenticationError as e:
         LOG.critical('There was a problem when authenticating with one or multiple services: %s', e)
         sys.exit(-1)
     except errors.APICompatibilityError as e:
