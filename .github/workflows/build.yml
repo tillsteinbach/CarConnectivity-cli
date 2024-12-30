@@ -36,6 +36,9 @@ jobs:
     - name: Build
       run: |
         python -m build
+    - name: Install built package
+      run: |
+        pip install dist/*.whl
     - name: Lint
       run: |
         make lint
