@@ -77,6 +77,8 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
 
     default_temp = os.path.join(tempfile.gettempdir(), 'carconnectivity.token')
     parser.add_argument('--tokenfile', help=f'file to store token (default: {default_temp})', default=default_temp)
+    default_cache_temp = os.path.join(tempfile.gettempdir(), 'carconnectivity.cache')
+    parser.add_argument('--cachefile', help=f'file to store cache (default: {default_cache_temp})', default=default_cache_temp)
 
     logging_group = parser.add_argument_group('Logging')
     logging_group.add_argument('-v', '--verbose', action="append_const", help='Logging level (verbosity)', const=-1,)
@@ -124,7 +126,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
     try:  # pylint: disable=too-many-nested-blocks
         with open(file=args.config, mode='r', encoding='utf-8') as config_file:
             config_dict = json.load(config_file)
-            car_connectivity = carconnectivity.CarConnectivity(config=config_dict, tokenstore_file=args.tokenfile)
+            car_connectivity = carconnectivity.CarConnectivity(config=config_dict, tokenstore_file=args.tokenfile, cache_file=args.cachefile)
 
             if args.command == 'shell':
                 try:
