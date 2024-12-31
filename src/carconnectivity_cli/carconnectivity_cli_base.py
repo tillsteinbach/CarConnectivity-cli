@@ -10,8 +10,10 @@ import logging
 import tempfile
 import cmd
 import json
+import time
+from datetime import datetime
 
-from carconnectivity import carconnectivity, errors, util, objects, attributes
+from carconnectivity import carconnectivity, errors, util, objects, attributes, observable
 from carconnectivity._version import __version__ as __carconnectivity_version__
 
 from carconnectivity_cli._version import __version__
@@ -102,6 +104,9 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
     parser_save: argparse.ArgumentParser = subparsers.add_parser('save', help='Save ressources by id to file')
     parser_save.add_argument('id', metavar='ID', type=str, help='Id to save')
     parser_save.add_argument('filename', metavar='FILENAME', type=str, help='File to save to')
+    parser_events = subparsers.add_parser(
+        'events', aliases=['e'], help='Continously retrieve events and show on console')
+    parser_events.set_defaults(command='events')
     parser_shell: argparse.ArgumentParser = subparsers.add_parser(
         'shell', aliases=['sh'], help='Start WeConnect shell')
     parser_shell.set_defaults(command='shell')
@@ -174,11 +179,39 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                 else:
                     print(f'id {args.id} not found', file=sys.stderr)
                     sys.exit(-1)
+            elif args.command == 'events':
+                def observer(element, flags):
+                    if flags & observable.Observable.ObserverEvent.ENABLED:
+                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new object created')
+                    elif flags & observable.Observable.ObserverEvent.DISABLED:
+                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': object not available anymore')
+                    elif flags & observable.Observable.ObserverEvent.VALUE_CHANGED:
+                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new value: ' + str(element))
+                    elif flags & observable.Observable.ObserverEvent.UPDATED_NEW_MEASUREMENT:
+                        print(str(datetime.now()) + ': ' + element.get_absolute_path()
+                              + ': was updated from vehicle but did not change: ' + str(element))
+                    elif flags & observable.Observable.ObserverEvent.UPDATED:
+                        print(str(datetime.now()) + ': ' + element.get_absolute_path()
+                              + ': was updated from server but did not change: ' + str(element))
+                    else:
+                        print(str(datetime.now()) + ' (' + str(flags) + '): '
+                              + element.get_absolute_path() + ': ' + str(element))
+                car_connectivity.add_observer(observer, observable.Observable.ObserverEvent.ALL,
+                                              priority=observable.Observable.ObserverPriority.USER_MID)
+                car_connectivity.fetch_all()
+                try:
+                    while True:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    LOG.info('Keyboard interrupt received, shutting down...')
             else:
                 LOG.error('command not implemented')
                 sys.exit(-1)
 
-        car_connectivity.shutdown()
+            car_connectivity.shutdown()
+    except json.JSONDecodeError as e:
+        LOG.critical('Could not load configuration file %s (%s)', args.config, e)
+        sys.exit(-1)
     except errors.AuthenticationError as e:
         LOG.critical('There was a problem when authenticating with one or multiple services: %s', e)
         sys.exit(-1)
