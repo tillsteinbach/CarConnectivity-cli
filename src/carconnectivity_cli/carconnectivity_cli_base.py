@@ -156,10 +156,10 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                     #     print(element.toJSON())
                     else:
                         print('Unknown format')
-                        sys.exit(-1)
+                        sys.exit('Unknown format')
                 else:
                     print(f'id {args.id} not found', file=sys.stderr)
-                    sys.exit(-1)
+                    sys.exit('id not found')
             elif args.command == 'set':
                 car_connectivity.fetch_all()
                 element: carconnectivity.GenericObject | objects.GenericAttribute | bool = car_connectivity.get_by_path(args.id)
@@ -171,16 +171,16 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                             print(f'id {args.id} cannot be set.  You can see all changeable entries with "list -s', file=sys.stderr)
                     except ValueError as value_error:
                         print(f'id {args.id} cannot be set: {value_error}', file=sys.stderr)
-                        sys.exit(-1)
+                        sys.exit('id cannot be set')
                     except NotImplementedError:
                         print(f'id {args.id} cannot be set. You can see all changeable entries with "list -s"', file=sys.stderr)
-                        sys.exit(-1)
+                        sys.exit('id cannot be set')
                     except errors.SetterError as err:
                         print(f'id {args.id} cannot be set: {err}', file=sys.stderr)
-                        sys.exit(-1)
+                        sys.exit('id cannot be set')
                 else:
                     print(f'id {args.id} not found', file=sys.stderr)
-                    sys.exit(-1)
+                    sys.exit('id not found')
             elif args.command == 'events':
                 def observer(element, flags):
                     if flags & observable.Observable.ObserverEvent.ENABLED:
@@ -208,22 +208,27 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                     LOG.info('Keyboard interrupt received, shutting down...')
             else:
                 LOG.error('command not implemented')
-                sys.exit(-1)
+                sys.exit('command not implemented')
 
             car_connectivity.shutdown()
     except json.JSONDecodeError as e:
         LOG.critical('Could not load configuration file %s (%s)', args.config, e)
-        sys.exit(-1)
+        sys.exit('Could not load configuration file')
     except errors.AuthenticationError as e:
         LOG.critical('There was a problem when authenticating with one or multiple services: %s', e)
-        sys.exit(-1)
+        sys.exit('There was a problem when communicating with one or multiple services')
     except errors.APICompatibilityError as e:
         LOG.critical('There was a problem when communicating with one or multiple services.'
                      ' If this problem persists please open a bug report: %s', e)
-        sys.exit(-1)
+        sys.exit('There was a problem when communicating with one or multiple services')
     except errors.RetrievalError as e:
         LOG.critical('There was a problem when communicating with one or multiple services: %s', e)
-        sys.exit(-1)
+        sys.exit('There was a problem when communicating with one or multiple services')
+    except errors.ConfigurationError as e:
+        LOG.critical('There was a problem with the configuration: %s', e)
+        sys.exit('There was a problem with the configuration')
+    except KeyboardInterrupt:
+        sys.exit("killed")
 
 
 class CarConnectivityShell(cmd.Cmd):
