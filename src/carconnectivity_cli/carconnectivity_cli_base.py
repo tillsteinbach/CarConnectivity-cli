@@ -130,7 +130,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
 
             if args.command == 'shell':
                 try:
-                    car_connectivity.fetch_all()
+                    car_connectivity.startup()
                     CarConnectivityShell(car_connectivity).cmdloop()
                 except KeyboardInterrupt:
                     pass
@@ -182,6 +182,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                     print(f'id {args.id} not found', file=sys.stderr)
                     sys.exit('id not found')
             elif args.command == 'events':
+                car_connectivity.startup()
                 def observer(element, flags):
                     if flags & observable.Observable.ObserverEvent.ENABLED:
                         print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new object created')
@@ -200,7 +201,6 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                               + element.get_absolute_path() + ': ' + str(element))
                 car_connectivity.add_observer(observer, observable.Observable.ObserverEvent.ALL,
                                               priority=observable.Observable.ObserverPriority.USER_MID)
-                car_connectivity.fetch_all()
                 try:
                     while True:
                         time.sleep(1)
