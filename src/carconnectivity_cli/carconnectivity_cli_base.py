@@ -13,6 +13,8 @@ import json
 import time
 from datetime import datetime
 
+from json_minify import json_minify
+
 from carconnectivity import carconnectivity, errors, util, objects, attributes, observable
 from carconnectivity._version import __version__ as __carconnectivity_version__
 
@@ -125,7 +127,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
 
     try:  # pylint: disable=too-many-nested-blocks
         with open(file=args.config, mode='r', encoding='utf-8') as config_file:
-            config_dict = json.load(config_file)
+            config_dict = json.loads(json_minify(config_file.read(), strip_space=False))
             car_connectivity = carconnectivity.CarConnectivity(config=config_dict, tokenstore_file=args.tokenfile, cache_file=args.cachefile)
 
             if args.command == 'shell':
@@ -183,6 +185,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                     sys.exit('id not found')
             elif args.command == 'events':
                 car_connectivity.startup()
+
                 def observer(element, flags):
                     if flags & observable.Observable.ObserverEvent.ENABLED:
                         print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new object created')
