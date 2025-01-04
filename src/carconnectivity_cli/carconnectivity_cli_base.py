@@ -126,9 +126,10 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
             handler.addFilter(util.DuplicateFilter())
 
     try:  # pylint: disable=too-many-nested-blocks
-        with open(file=args.config, mode='r', encoding='utf-8') as config_file:
-            config_dict = json.loads(json_minify(config_file.read(), strip_space=False))
-            car_connectivity = carconnectivity.CarConnectivity(config=config_dict, tokenstore_file=args.tokenfile, cache_file=args.cachefile)
+        try:
+            with open(file=args.config, mode='r', encoding='utf-8') as config_file:
+                config_dict = json.loads(json_minify(config_file.read(), strip_space=False))
+                car_connectivity = carconnectivity.CarConnectivity(config=config_dict, tokenstore_file=args.tokenfile, cache_file=args.cachefile)
 
             if args.command == 'shell':
                 try:
@@ -212,8 +213,10 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
             else:
                 LOG.error('command not implemented')
                 sys.exit('command not implemented')
-
             car_connectivity.shutdown()
+        except FileNotFoundError as e:
+            LOG.critical('Could not find configuration file %s (%s)', args.config, e)
+            sys.exit('Could not find configuration file')
     except json.JSONDecodeError as e:
         LOG.critical('Could not load configuration file %s (%s)', args.config, e)
         sys.exit('Could not load configuration file')
