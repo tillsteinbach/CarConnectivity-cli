@@ -11,7 +11,7 @@ import tempfile
 import cmd
 import json
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 from json_minify import json_minify
 
@@ -189,19 +189,19 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
 
                 def observer(element, flags):
                     if flags & observable.Observable.ObserverEvent.ENABLED:
-                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new object created')
+                        print(str(datetime.now(tz=timezone.utc)) + ': ' + element.get_absolute_path() + ': new object created')
                     elif flags & observable.Observable.ObserverEvent.DISABLED:
-                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': object not available anymore')
+                        print(str(datetime.now(tz=timezone.utc)) + ': ' + element.get_absolute_path() + ': object not available anymore')
                     elif flags & observable.Observable.ObserverEvent.VALUE_CHANGED:
-                        print(str(datetime.now()) + ': ' + element.get_absolute_path() + ': new value: ' + str(element))
+                        print(str(datetime.now(tz=timezone.utc)) + ': ' + element.get_absolute_path() + ': new value: ' + str(element))
                     elif flags & observable.Observable.ObserverEvent.UPDATED_NEW_MEASUREMENT:
-                        print(str(datetime.now()) + ': ' + element.get_absolute_path()
+                        print(str(datetime.now(tz=timezone.utc)) + ': ' + element.get_absolute_path()
                               + ': was updated from vehicle but did not change: ' + str(element))
                     elif flags & observable.Observable.ObserverEvent.UPDATED:
-                        print(str(datetime.now()) + ': ' + element.get_absolute_path()
+                        print(str(datetime.now(tz=timezone.utc)) + ': ' + element.get_absolute_path()
                               + ': was updated from server but did not change: ' + str(element))
                     else:
-                        print(str(datetime.now()) + ' (' + str(flags) + '): '
+                        print(str(datetime.now(tz=timezone.utc)) + ' (' + str(flags) + '): '
                               + element.get_absolute_path() + ': ' + str(element))
                 car_connectivity.add_observer(observer, observable.Observable.ObserverEvent.ALL,
                                               priority=observable.Observable.ObserverPriority.USER_MID)
