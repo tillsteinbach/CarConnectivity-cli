@@ -34,6 +34,15 @@ classifiers = [
         'Topic :: System :: Monitoring',
 ]
 
+[project.optional-dependencies]
+connectors = [
+    'carconnectivity-connector-volkswagen',
+    'carconnectivity-connector-skoda',
+]
+plugins = [
+    'carconnectivity-plugin-abrp',
+]
+
 [project.urls]
 
 [project.scripts]
