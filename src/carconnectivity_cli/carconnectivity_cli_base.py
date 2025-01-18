@@ -15,7 +15,8 @@ from datetime import datetime, timezone
 
 from json_minify import json_minify
 
-from carconnectivity import carconnectivity, errors, util, objects, attributes, observable
+from carconnectivity import carconnectivity, errors, util, objects, observable
+from carconnectivity.attributes import GenericAttribute
 from carconnectivity._version import __version__ as __carconnectivity_version__
 
 from carconnectivity_cli._version import __version__
@@ -23,7 +24,6 @@ from carconnectivity_cli._version import __version__
 if TYPE_CHECKING:
     from typing import Literal, List
     from carconnectivity.objects import GenericObject
-    from carconnectivity.attributes import GenericAttribute
 
 LOG_LEVELS = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 DEFAULT_LOG_LEVEL = "ERROR"
@@ -142,13 +142,13 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                 all_elements: List[GenericAttribute] = car_connectivity.get_attributes(recursive=True)
                 for element in all_elements:
                     if args.setters:
-                        if isinstance(element, attributes.ChangeableAttribute):
+                        if element.is_changeable:
                             print(element.get_absolute_path())
                     else:
                         print(element.get_absolute_path())
             elif args.command == 'get':
                 car_connectivity.fetch_all()
-                element: carconnectivity.GenericObject | objects.GenericAttribute | bool = car_connectivity.get_by_path(args.id)
+                element: carconnectivity.GenericObject | GenericAttribute | bool = car_connectivity.get_by_path(args.id)
                 if element:
                     if args.format == Formats.STRING:
                         if isinstance(element, dict):
@@ -165,10 +165,10 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                     sys.exit('id not found')
             elif args.command == 'set':
                 car_connectivity.fetch_all()
-                element: carconnectivity.GenericObject | objects.GenericAttribute | bool = car_connectivity.get_by_path(args.id)
+                element: GenericObject | GenericAttribute | bool = car_connectivity.get_by_path(args.id)
                 if element:
                     try:
-                        if isinstance(element, attributes.ChangeableAttribute):
+                        if isinstance(element, GenericAttribute) and element.is_changeable:
                             element.value = args.value
                         else:
                             print(f'id {args.id} cannot be set.  You can see all changeable entries with "list -s', file=sys.stderr)
@@ -519,7 +519,7 @@ class CarConnectivityShell(cmd.Cmd):
         all_elements = self.pwd.get_attributes(recursive=True)
         for element in all_elements:
             if setters:
-                if isinstance(element, attributes.ChangeableAttribute):
+                if isinstance(element, GenericAttribute) and element.is_changeable:
                     print(element.get_absolute_path())
             else:
                 print(element.get_absolute_path())
