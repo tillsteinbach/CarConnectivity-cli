@@ -23,6 +23,21 @@ CarConenctivity uses a plugin architecture to enable access to the services of v
 If you know of a connector not listed here let me know and I will add it to the list.
 If you are a python developer and willing to implement a connector for a brand not listed here, let me know and I try to support you as good as possible
 
+## How to install
+You first need a running [Python](https://www.python.org/downloads/) installation. Afterwards you can install CarConnectivity-cli with:
+```
+pip install carconnectivity-cli
+```
+You also need the right connector for your vehicle, e.g.
+```
+pip install carconnectivity-connector-skoda
+```
+or you installed CarConnectivity-cli with all known connectors and plugins:
+```
+pip3 install 'carconnectivity-cli[connectors,plugins]'
+```
+The plugins will then become active when you add them to your configuration.
+
 ## How to use
 Start by creating a carconnectivity.json configuration file
 
