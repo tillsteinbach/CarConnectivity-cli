@@ -41,6 +41,9 @@ jobs:
     - name: Install built package
       run: |
         pip install dist/*.whl
+    - name: Run
+      run: |
+        carconnectivity-cli --version
     - name: Lint
       run: |
         make lint
