@@ -163,5 +163,5 @@ Please feel free to open an issue at [GitHub Issue page](https://github.com/till
 - The Tool is in alpha state and may change unexpectedly at any time!
 
 ## Related Projects:
-- [WeConnect-MQTT](https://github.com/tillsteinbach/WeConnect-mqtt): MQTT Client that publishes data from CarConnectivity to any MQTT broker.
+- [CarConnectivity-plugin-mqtt](https://github.com/tillsteinbach/CarConnectivity-plugin-mqtt): MQTT Client that publishes data from CarConnectivity to any MQTT broker.
 - [CarConnectivity](https://github.com/tillsteinbach/CarConnectivity): The underlying python API behind CarConnectivity-cli. If you are a developer and want to implement an application or service with vehicle telemetry data you can use [CarConnectivity-Library](https://github.com/tillsteinbach/CarConnectivity).
