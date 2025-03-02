@@ -14,7 +14,7 @@ authors = [
     { name = "Till Steinbach" }
 ]
 dependencies = [
-    "carconnectivity>=0.4a5",
+    "carconnectivity>=0.4",
     "argparse",
     "JSON_minify~=0.3.0"
 ]
