@@ -16,7 +16,8 @@ authors = [
 dependencies = [
     "carconnectivity>=0.5",
     "argparse",
-    "JSON_minify~=0.3.0"
+    "JSON_minify~=0.3.0",
+    "ascii_magic~=2.3.0"
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
