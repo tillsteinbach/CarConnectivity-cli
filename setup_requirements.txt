@@ -1,3 +1,4 @@
 flake8~=7.1.2
 pylint~=3.3.4
 bandit~=1.8.3
+ascii_magic~=2.3.0
