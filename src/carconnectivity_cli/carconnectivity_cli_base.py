@@ -155,8 +155,8 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                             print('\n'.join([str(value) for value in element.values()]))
                         else:
                             print(element)
-                    # elif args.format == Formats.JSON:
-                    #     print(element.toJSON())
+                    elif args.format == Formats.JSON:
+                        print(element.as_json(pretty=True))
                     else:
                         print('Unknown format')
                         sys.exit('Unknown format')
