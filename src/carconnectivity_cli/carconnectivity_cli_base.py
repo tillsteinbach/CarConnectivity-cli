@@ -140,6 +140,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
             elif args.command == 'list':
                 car_connectivity.fetch_all()
                 all_elements: List[GenericAttribute] = car_connectivity.get_attributes(recursive=True)
+                all_elements.sort(key=lambda x: x.get_absolute_path())
                 for element in all_elements:
                     if args.setters:
                         if element.is_changeable:
