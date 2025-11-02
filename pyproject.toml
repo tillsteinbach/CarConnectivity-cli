@@ -14,7 +14,7 @@ authors = [
     { name = "Till Steinbach" }
 ]
 dependencies = [
-    "carconnectivity>=0.7.1",
+    "carconnectivity>=0.8.1",
     "argparse",
     "JSON_minify~=0.3.0"
 ]
@@ -31,6 +31,7 @@ classifiers = [
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Topic :: Utilities',
         'Topic :: System :: Monitoring',
 ]
