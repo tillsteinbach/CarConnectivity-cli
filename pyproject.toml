@@ -19,6 +19,7 @@ dependencies = [
     "JSON_minify~=0.3.0"
 ]
 readme = "README.md"
+license = "MIT"
 license-files = [
     "LICENSE",
 ]
