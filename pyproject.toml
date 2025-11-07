@@ -14,12 +14,14 @@ authors = [
     { name = "Till Steinbach" }
 ]
 dependencies = [
-    "carconnectivity>=0.8.1",
+    "carconnectivity>=0.9",
     "argparse",
     "JSON_minify~=0.3.0"
 ]
 readme = "README.md"
-license = { file = "LICENSE" }
+license-files = [
+    "LICENSE",
+]
 classifiers = [
       'Development Status :: 3 - Alpha',
         'Environment :: Console',
