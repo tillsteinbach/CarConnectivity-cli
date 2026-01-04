@@ -24,9 +24,8 @@ license-files = [
     "LICENSE",
 ]
 classifiers = [
-      'Development Status :: 3 - Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
-        'License :: OSI Approved :: MIT License',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: System Administrators',
         'Programming Language :: Python :: 3.9',
