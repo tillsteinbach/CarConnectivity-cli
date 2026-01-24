@@ -211,6 +211,7 @@ def main() -> None:  # noqa: C901 # pylint: disable=too-many-statements,too-many
                         time.sleep(1)
                 except KeyboardInterrupt:
                     LOG.info('Keyboard interrupt received, shutting down...')
+                car_connectivity.remove_observer(observer)
             else:
                 LOG.error('command not implemented')
                 sys.exit('command not implemented')
