@@ -14,7 +14,7 @@ authors = [
     { name = "Till Steinbach" }
 ]
 dependencies = [
-    "carconnectivity>=0.11.5",
+    "carconnectivity>=0.11.9",
     "argparse",
     "JSON_minify~=0.3.0"
 ]
@@ -40,18 +40,18 @@ classifiers = [
 
 [project.optional-dependencies]
 connectors = [
-    'carconnectivity-connector-volkswagen>=0.10.1',
-    'carconnectivity-connector-skoda>=0.12.4',
-    'carconnectivity-connector-seatcupra>=0.6.1',
+    'carconnectivity-connector-volkswagen>=0.10.5',
+    'carconnectivity-connector-skoda>=0.12.5',
+    'carconnectivity-connector-seatcupra>=0.6.2',
     'carconnectivity-connector-tronity>=0.7.1',
 ]
 plugins = [
-    'carconnectivity-plugin-mqtt>=0.10.1',
+    'carconnectivity-plugin-mqtt>=0.10.2',
     'carconnectivity-plugin-mqtt_homeassistant>=0.6.4',
     'carconnectivity-plugin-abrp>=0.8.1',
     'carconnectivity-plugin-homekit>=0.7.6',
     'carconnectivity-plugin-webui>=0.7.1',
-    'carconnectivity-plugin-database>=0.4.2',
+    'carconnectivity-plugin-database>=0.4.4',
 ]
 
 [project.urls]
