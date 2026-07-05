@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 - No unreleased changes so far
 
+## [0.8.2] - 2026-07-05
+### Changed
+- Updated dependencies: carconnectivity to 0.11.10, carconnectivity-connector-skoda to 0.12.6, carconnectivity-connector-seatcupra to 0.6.4, carconnectivity-connector-tronity to 0.7.3, carconnectivity-plugin-mqtt to 0.10.5, carconnectivity-plugin-mqtt_homeassistant to 0.6.6, carconnectivity-plugin-abrp to 0.8.3, carconnectivity-plugin-homekit to 0.7.7, carconnectivity-plugin-webui to 0.7.3, carconnectivity-plugin-database to 0.4.5, pylint to 4.0.6
+
 ## [0.8.1] - 2026-04-24
 ### Changed
 - Updated dependencies: carconnectivity to 0.11.9, carconnectivity-connector-volkswagen to 0.10.5, carconnectivity-connector-skoda to 0.12.5, carconnectivity-connector-seatcupra to 0.6.2, carconnectivity-plugin-mqtt to 0.10.2, carconnectivity-plugin-database to 0.4.4, pylint to 4.0.5, bandit to 1.9.4
@@ -49,7 +53,8 @@ All notable changes to this project will be documented in this file.
 ## [0.1] - 2025-01-25
 Initial release, let's go and give this to the public to try out...
 
-[unreleased]: https://github.com/tillsteinbach/CarConnectivity-cli/compare/v0.8.1...HEAD
+[unreleased]: https://github.com/tillsteinbach/CarConnectivity-cli/compare/v0.8.2...HEAD
+[0.8.2]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8.2
 [0.8.1]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8.1
 [0.8]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8
 [0.7]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.7
