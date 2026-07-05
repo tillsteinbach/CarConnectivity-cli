@@ -54,7 +54,7 @@ All notable changes to this project will be documented in this file.
 Initial release, let's go and give this to the public to try out...
 
 [unreleased]: https://github.com/tillsteinbach/CarConnectivity-cli/compare/v0.8.2...HEAD
-[0.8.2]: https://github.com/tillsteinbach/CarConnectivity-cli/compare/v0.8.1...v0.8.2
+[0.8.2]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8.2
 [0.8.1]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8.1
 [0.8]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.8
 [0.7]: https://github.com/tillsteinbach/CarConnectivity-cli/releases/tag/v0.7
