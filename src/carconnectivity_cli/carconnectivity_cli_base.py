@@ -292,7 +292,7 @@ class CarConnectivityShell(cmd.Cmd):
         """
         if path == '':
             path = '/'
-        CarConnectivityShell.prompt = f'ccs:{path}$'
+        CarConnectivityShell.prompt = f'ccs:{path}$ '
 
     def help_exit(self) -> None:
         """
